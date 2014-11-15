@@ -1,0 +1,34 @@
+//
+//  Header.h
+//  Trial03
+//
+//  Created by LAVISTA on 2014. 11. 11..
+//  Copyright (c) 2014년 LAVISTA. All rights reserved.
+//
+
+#ifndef Trial03_Header_h
+#define Trial03_Header_h
+
+#define MAX 10
+using namespace std;
+
+class Ladder{
+
+private:
+    int start, end;
+
+    
+    
+    
+public:
+    char line[3][MAX];
+    static int N;
+    
+public:
+    void set_define(int x);
+    void bridge();
+    void trace(int x);
+    void view();
+};
+
+#endif

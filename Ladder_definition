@@ -1,0 +1,93 @@
+//
+//  definition.cpp
+//  Trial03
+//
+//  Created by LAVISTA on 2014. 11. 11..
+//  Copyright (c) 2014년 LAVISTA. All rights reserved.
+//
+#include <iostream>
+#include <stdlib.h>
+#include "Header.h"
+
+int Ladder::N = 0;
+
+void Ladder::set_define(int x){
+    
+    for(int i=0; i<MAX;i++){
+        line[0][i]='0';
+        line[2][i]='0';
+        line[1][i]='1';
+    }
+
+    
+    if(x==0)
+        for(int i=0;i<MAX;i++)line[0][i]='3';
+    
+    else if(x== (N-1))
+            for(int i=0;i<MAX;i++)line[2][i]='3';
+        
+    this-> start = x+1;
+}
+
+void Ladder::bridge(){
+    int tmp;
+    
+    
+ //   tmp = rand()%N;  이거 위치가 여기가 아니네. 그리고 N도 아니네
+    
+    for(int i=0; i<MAX/2;i++){
+        tmp = rand()%MAX;
+//        if(line[0][tmp] != 1 && tmp>0 && tmp<(Ladder::N-1)){  //line 자료형 char이라고
+//        if(line[0][tmp] != '1' && tmp>0 && tmp<(Ladder::N-1)){ //Ladder::N도 아님
+        if(line[0][tmp] != '1' && tmp>0 && tmp<(MAX-1)){
+            line[2][tmp]='1';
+            (this+1) -> line[0][tmp]='1';
+        }
+        
+    }
+}
+
+
+void Ladder::trace(int x){
+    Ladder* tracer = this;
+    
+//    for(int i=1; i<N-1;i++){
+    for(int i=1; i<MAX;i++){
+    if(tracer->line[0][i]=='1')
+            tracer--;
+//        else if(line[2][i]=='1')  //틀린지점 발견!
+        else if(tracer->line[2][i]=='1')
+            tracer++;
+    }
+    tracer->end = x+1;
+    
+}
+
+void Ladder::view(){
+    for(int i=0; i<N;i++){
+        cout.width(5);
+        cout.setf(ios_base::left, ios_base::adjustfield);
+        cout<<(this+i)->start;
+    }
+    cout<<endl;
+    for(int i=0; i<MAX;i++){
+        for(int j=0;j<N;j++){
+            if((this+j)->line[0][i]=='1') cout<<"--";
+            else if((this+j)->line[0][i]=='0') cout<<"  ";
+            
+            if((this+j)->line[1][i]=='1') cout<<"|";
+            
+            if((this+j)->line[2][i]=='1') cout<<"--";
+            else if((this+j)->line[2][i]=='0') cout<<"  ";
+        }cout<<endl;
+        
+    }
+
+    for(int i=0; i<N;i++){
+        cout.width(5);
+        cout.setf(ios_base::left, ios_base::adjustfield);
+        cout<<(this+i)->end;
+    }
+    
+    
+}
